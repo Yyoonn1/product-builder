@@ -1,250 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Wedding Gift Ceremony</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-:root {
-  --gold: #c9b37e;
-  --gold-soft: #e6d8a8;
-}
-
-* {
-  box-sizing: border-box;
-  font-family: "Playfair Display", "Noto Sans KR", serif;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #1a1a1a, #000);
-  color: #f2f2f2;
-}
-
-.wrapper {
-  max-width: 1200px;
-  margin: auto;
-  padding: 80px 40px;
-}
-
-/* Header */
-.header {
-  text-align: center;
-  margin-bottom: 70px;
-}
-
-.header .label {
-  font-size: 14px;
-  letter-spacing: 4px;
-  color: var(--gold);
-  margin-bottom: 18px;
-}
-
-.header h1 {
-  font-size: 48px;
-  margin: 0;
-}
-
-.header .sub {
-  margin-top: 16px;
-  color: #ccc;
-  font-size: 18px;
-}
-
-/* Layout */
-.main {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 50px;
-}
-
-/* Stage */
-.stage {
-  background: linear-gradient(180deg, #111, #0a0a0a);
-  border-radius: 36px;
-  padding: 90px 70px;
-  border: 1px solid rgba(201,179,126,0.35);
-  box-shadow: 0 40px 120px rgba(0,0,0,0.8);
-  text-align: center;
-}
-
-.stage button {
-  background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-  color: #000;
-  border: none;
-  padding: 22px 70px;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 80px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.stage button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.stage button:hover:not(:disabled) {
-  transform: translateY(-4px);
-}
-
-/* Result */
-.result {
-  margin-top: 60px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.result.show {
-  opacity: 1;
-}
-
-.winner {
-  font-size: 36px;
-  margin-bottom: 14px;
-}
-
-.prize {
-  font-size: 26px;
-  color: var(--gold);
-}
-
-.premium {
-  border: 1px solid var(--gold);
-  padding: 16px 24px;
-  border-radius: 14px;
-  display: inline-block;
-}
-
-/* Prize Panel */
-.panel {
-  background: #0b0b0b;
-  border-radius: 36px;
-  padding: 60px 50px;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-.panel h3 {
-  font-size: 16px;
-  letter-spacing: 3px;
-  color: var(--gold);
-  margin-bottom: 30px;
-}
-
-.prize-list {
-  font-size: 16px;
-  line-height: 2;
-  color: #ddd;
-}
-
-.prize-item {
-  padding-left: 10px;
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  margin-top: 80px;
-  font-size: 13px;
-  color: #666;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Finder - 장르별 영화 찾기</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<div class="wrapper">
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">MOVIE FINDER</h1>
+            <p class="subtitle">오늘 볼 영화를 장르별로 찾아보세요</p>
+        </div>
+    </header>
 
-  <div class="header">
-    <div class="label">WEDDING GIFT CEREMONY</div>
-    <h1>이빛나 & 김상윤</h1>
-    <div class="sub">감사의 마음을 담아 준비한 선물입니다</div>
-  </div>
+    <nav class="filter-nav">
+        <div class="container">
+            <button class="filter-btn active" data-genre="all">전체</button>
+            <button class="filter-btn" data-genre="action">액션</button>
+            <button class="filter-btn" data-genre="romance">로맨스</button>
+            <button class="filter-btn" data-genre="scifi">SF</button>
+            <button class="filter-btn" data-genre="horror">공포</button>
+            <button class="filter-btn" data-genre="comedy">코미디</button>
+            <button class="filter-btn" data-genre="drama">드라마</button>
+        </div>
+    </nav>
 
-  <div class="main">
+    <main class="main-content">
+        <div class="container">
+            <div id="movie-grid" class="movie-grid">
+                <!-- Movie cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </main>
 
-    <!-- Left: Stage -->
-    <div class="stage">
-      <button id="drawBtn" onclick="draw()">DRAW GIFT</button>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Movie Finder. All rights reserved.</p>
+        </div>
+    </footer>
 
-      <div class="result" id="result"></div>
-    </div>
-
-    <!-- Right: Prize Panel -->
-    <div class="panel">
-      <h3>AVAILABLE GIFTS</h3>
-      <div class="prize-list" id="prizeList"></div>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    © Wedding Ceremony · Black & Gold Signature
-  </div>
-
-</div>
-
-<script>
-let participants = [
-  "동생1","동생2","장인어른","장모님",
-  "시아버지","시어머니","하루","룰루"
-];
-
-let prizes = [
-  "MacBook",
-  "iPhone",
-  "Apple Watch",
-  "AirPods",
-  "Luxury Wallet",
-  "Nintendo Switch",
-  "Hotel Dining Voucher",
-  "Coffee Gift Card"
-];
-
-function renderPrizes() {
-  const list = document.getElementById("prizeList");
-  list.innerHTML = prizes.map(p =>
-    `<div class="prize-item">• ${p}</div>`
-  ).join("");
-}
-
-function draw() {
-  if (participants.length === 0) return;
-
-  const btn = document.getElementById("drawBtn");
-  const result = document.getElementById("result");
-
-  const pIndex = Math.floor(Math.random() * participants.length);
-  const gIndex = Math.floor(Math.random() * prizes.length);
-
-  const winner = participants.splice(pIndex, 1)[0];
-  const prize = prizes.splice(gIndex, 1)[0];
-
-  const isPremium = prize === "MacBook" || prize === "iPhone";
-
-  result.classList.remove("show");
-  void result.offsetWidth;
-
-  result.innerHTML = `
-    <div class="winner">${winner}</div>
-    <div class="prize ${isPremium ? 'premium' : ''}">
-      ${prize}
-    </div>
-  `;
-
-  result.classList.add("show");
-  renderPrizes();
-
-  if (participants.length === 0) {
-    btn.disabled = true;
-  }
-}
-
-renderPrizes();
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
