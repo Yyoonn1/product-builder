@@ -168,22 +168,42 @@ const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1485846234645-a62644f8
 document.addEventListener('DOMContentLoaded', () => {
     const movieGrid = document.getElementById('movie-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    // Modal Elements
+    const modal = document.getElementById("subModal");
+    const btn = document.getElementById("subscribeBtn");
+    const span = document.getElementsByClassName("close-btn")[0];
 
     // Initial render (All movies)
     renderMovies(movies);
 
-    // Filter Click Events
+    // Filter Events
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active class from all
             filterBtns.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked
             btn.classList.add('active');
-
             const genre = btn.getAttribute('data-genre');
             filterMovies(genre);
         });
     });
+
+    // Modal Events
+    btn.onclick = function() {
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden"; // Prevent scrolling
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    }
 
     function filterMovies(genre) {
         if (genre === 'all') {
@@ -196,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderMovies(movieList) {
         movieGrid.innerHTML = '';
-
         if (movieList.length === 0) {
             movieGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 50px;">해당 장르의 영화가 없습니다.</div>';
             return;
@@ -207,13 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'movie-card';
             card.style.animationDelay = `${index * 0.05}s`;
 
-            // Handle Image Error by replacing with fallback
             const imgElement = document.createElement('img');
             imgElement.src = movie.image;
             imgElement.alt = movie.title;
-            imgElement.onerror = function() {
-                this.src = FALLBACK_IMAGE;
-            };
+            imgElement.onerror = function() { this.src = FALLBACK_IMAGE; };
 
             const posterDiv = document.createElement('div');
             posterDiv.className = 'movie-poster';
@@ -235,19 +251,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getMainGenre(genres) {
-        // Map English genre to Korean for display
         const genreMap = {
-            'action': '액션',
-            'romance': '로맨스',
-            'scifi': 'SF',
-            'horror': '공포',
-            'comedy': '코미디',
-            'drama': '드라마',
-            'animation': '애니',
-            'family': '가족',
-            'thriller': '스릴러',
+            'action': '액션', 'romance': '로맨스', 'scifi': 'SF',
+            'horror': '공포', 'comedy': '코미디', 'drama': '드라마',
+            'animation': '애니', 'family': '가족', 'thriller': '스릴러',
             'crime': '범죄'
         };
         return genreMap[genres[0]] || genres[0];
     }
 });
+
+// Mock Subscription Function
+function selectPlan(plan) {
+    alert(`"${plan.toUpperCase()}" 플랜을 선택하셨습니다.\n(결제 기능은 준비 중입니다)`);
+    document.getElementById("subModal").style.display = "none";
+    document.body.style.overflow = "auto";
+}
