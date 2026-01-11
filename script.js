@@ -14,7 +14,7 @@ const movies = [
         genre: ["romance", "drama"],
         rating: 7.8,
         year: 2013,
-        image: "https://image.tmdb.org/t/p/w500/bQ7451x3bZ5afJ9XN89y7w52.jpg" // Placeholder or similar logic
+        image: "https://image.tmdb.org/t/p/w500/bQ7451x3bZ5afJ9XN89y7w52.jpg"
     },
     {
         id: 3,
@@ -102,7 +102,7 @@ const movies = [
         genre: ["action", "horror"],
         rating: 7.6,
         year: 2016,
-        image: "https://image.tmdb.org/t/p/w500/393lDFv3gM31dbFz63jXv324x.jpg" // Pseudo
+        image: "https://image.tmdb.org/t/p/w500/393lDFv3gM31dbFz63jXv324x.jpg" 
     },
     {
         id: 14,
@@ -110,7 +110,7 @@ const movies = [
         genre: ["comedy", "drama"],
         rating: 7.8,
         year: 2011,
-        image: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=500&q=60" // Placeholder
+        image: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=500&q=60" 
     },
     {
         id: 15,
@@ -118,7 +118,7 @@ const movies = [
         genre: ["comedy", "action"],
         rating: 7.4,
         year: 2019,
-        image: "https://images.unsplash.com/photo-1514328833-294b46c59b32?auto=format&fit=crop&w=500&q=60" // Placeholder
+        image: "https://images.unsplash.com/photo-1514328833-294b46c59b32?auto=format&fit=crop&w=500&q=60" 
     },
     {
         id: 16,
@@ -150,7 +150,7 @@ const movies = [
         genre: ["comedy", "drama"],
         rating: 8.4,
         year: 2009,
-        image: "https://image.tmdb.org/t/p/w500/sC14loT1YdN0E97rOGjFq4V3f.jpg" // Pseudo
+        image: "https://image.tmdb.org/t/p/w500/sC14loT1YdN0E97rOGjFq4V3f.jpg"
     },
     {
         id: 20,
@@ -162,7 +162,7 @@ const movies = [
     }
 ];
 
-// Fallback image if TMDB link breaks (using Unsplash)
+// Fallback image
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=500&q=60";
 
 document.addEventListener('DOMContentLoaded', () => {
